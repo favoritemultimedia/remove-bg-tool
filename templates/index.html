@@ -8,40 +8,25 @@
 <style>
 
 body{
-margin:0;
-padding:20px;
-font-family:Poppins;
-background:#0f172a;
+background:#081028;
 color:white;
+font-family:Arial;
 text-align:center;
-}
-
-.box{
-max-width:700px;
-margin:auto;
-}
-
-img{
-max-width:100%;
-border-radius:12px;
-margin-top:20px;
+padding:40px;
 }
 
 button{
 padding:12px 20px;
-border:none;
-border-radius:8px;
 background:#22c55e;
 color:white;
+border:none;
+border-radius:8px;
 cursor:pointer;
 }
 
-button:hover{
-background:#ef4444;
-}
-
-input{
-margin:20px;
+img{
+max-width:90%;
+margin-top:20px;
 }
 
 </style>
@@ -50,47 +35,45 @@ margin:20px;
 
 <body>
 
-<div class="box">
-
 <h2>🔥 Remove Background</h2>
 
 <input type="file" id="img">
 
-<br>
+<br><br>
 
-<button onclick="removeBg()">
-Remove Background
+<button onclick="go()">
+Remove
 </button>
 
 <br>
 
 <img id="out">
 
-</div>
-
 <script>
 
-async function removeBg(){
+async function go(){
 
-let file=document.getElementById("img").files[0];
+let f=img.files[0];
 
-if(!file){
-alert("Upload image");
+if(!f){
+alert("upload image");
 return;
 }
 
 let fd=new FormData();
 
-fd.append("image",file);
+fd.append("image",f);
 
-let res=await fetch("/remove",{
+let res=
+await fetch("/remove",{
 method:"POST",
 body:fd
 });
 
-let blob=await res.blob();
+let blob=
+await res.blob();
 
-document.getElementById("out").src=
+out.src=
 URL.createObjectURL(blob);
 
 }
