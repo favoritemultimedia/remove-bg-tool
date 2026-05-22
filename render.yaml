@@ -1,10 +1,10 @@
 services:
-- type: web
-  name: remove-bg
-  env: python
+  - type: web
 
-  buildCommand: |
-    pip install -r requirements.txt
+    name: remove-bg-tool
 
-  startCommand: |
-    gunicorn app:app
+    env: python
+
+    buildCommand: pip install -r requirements.txt
+
+    startCommand: python app.py
