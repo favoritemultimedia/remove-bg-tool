@@ -14,11 +14,12 @@ def home():
 @app.route("/remove", methods=["POST"])
 def remove_bg():
 
+    if "image" not in request.files:
+        return "No file",400
+
     file=request.files["image"]
 
-    input_data=file.read()
-
-    output=remove(input_data)
+    output=remove(file.read())
 
     return send_file(
         io.BytesIO(output),
@@ -26,14 +27,9 @@ def remove_bg():
     )
 
 
-if __name__=="__main__":
+port=int(os.environ.get("PORT",10000))
 
-    import os
-
-    port=int(os.environ.get("PORT",10000))
-
-    app.run(
-        host="0.0.0.0",
-        port=port,
-        debug=False
-    )
+app.run(
+    host="0.0.0.0",
+    port=port
+)
