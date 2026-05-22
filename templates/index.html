@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+padding:20px;
+font-family:Poppins;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+.box{
+max-width:700px;
+margin:auto;
+}
+
+img{
+max-width:100%;
+border-radius:12px;
+margin-top:20px;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:8px;
+background:#22c55e;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#ef4444;
+}
+
+input{
+margin:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>🔥 Remove Background</h2>
+
+<input type="file" id="img">
+
+<br>
+
+<button onclick="removeBg()">
+Remove Background
+</button>
+
+<br>
+
+<img id="out">
+
+</div>
+
+<script>
+
+async function removeBg(){
+
+let file=document.getElementById("img").files[0];
+
+if(!file){
+alert("Upload image");
+return;
+}
+
+let fd=new FormData();
+
+fd.append("image",file);
+
+let res=await fetch("/remove",{
+method:"POST",
+body:fd
+});
+
+let blob=await res.blob();
+
+document.getElementById("out").src=
+URL.createObjectURL(blob);
+
+}
+
+</script>
+
+</body>
+
+</html>
