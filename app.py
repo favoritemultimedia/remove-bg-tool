@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, send_file
 from rembg import remove
-from PIL import Image
 import io
+import os
 
 app = Flask(__name__)
 
@@ -14,21 +14,23 @@ def home():
 @app.route("/remove", methods=["POST"])
 def remove_bg():
 
-    if "image" not in request.files:
-        return "No image"
+    file=request.files["image"]
 
-    file = request.files["image"]
+    input_data=file.read()
 
-    input_bytes = file.read()
-
-    output = remove(input_bytes)
+    output=remove(input_data)
 
     return send_file(
         io.BytesIO(output),
-        mimetype="image/png",
-        as_attachment=False
+        mimetype="image/png"
     )
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+if __name__=="__main__":
+
+    port=int(os.environ.get("PORT",10000))
+
+    app.run(
+        host="0.0.0.0",
+        port=port
+    )
